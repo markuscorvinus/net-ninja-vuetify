@@ -16,17 +16,25 @@
        </v-app-bar>
 
        <v-navigation-drawer app v-model="drawer" color="secondary" > 
-           <v-list>
-               
-               <v-list-item v-for="(link,index) in links" :key="index" :to="link.route">
-                   <v-list-item-action>
-                       <v-icon color="white">mdi-{{ link.icon }}</v-icon>
-                   </v-list-item-action>
-                   <v-list-item-content>
-                       <v-list-item-title class="white--text">{{ link.text }}</v-list-item-title>
-                   </v-list-item-content>
-               </v-list-item>
-           </v-list>
+            <v-row>
+                <v-col class="mt-5">
+                    <v-row  justify="center" align="center">
+                        <v-avatar size="100" ><img src="/avatar-1.png" alt="The net Ninja"></v-avatar>
+                    </v-row>
+                    <p class="white--text text-center text-subtitle-1 mt-1">THE NET NINJA</p>                    
+                </v-col>
+            </v-row>
+            <v-divider></v-divider>
+            <v-list>
+                <v-list-item v-for="(link,index) in links" :key="index" :to="link.route">
+                    <v-list-item-action>
+                        <v-icon color="white">mdi-{{ link.icon }}</v-icon>
+                    </v-list-item-action>
+                    <v-list-item-content>
+                        <v-list-item-title class="white--text">{{ link.text }}</v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
+            </v-list>
        </v-navigation-drawer>
    </nav>
 </template>
