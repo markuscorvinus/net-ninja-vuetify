@@ -1,30 +1,59 @@
 <template>
   <div class="dashboard">
       <h1 class="subheading grey--text">Dashboard</h1>
+
       <v-container class="my-5">
+
+        <v-row class="mb-3">
+          <v-tooltip top>
+            <template v-slot:activator="{ on, attrs }">  
+              <v-btn small flat color="grey" class="mx-3" 
+                @click="sortBy('title')" 
+                v-bind="attrs"
+                v-on="on">
+                <v-icon left small>mdi-folder</v-icon><span class="caption text-lowercase">by project name</span>
+              </v-btn>
+            </template>
+            <span>Sort by Title</span>
+          </v-tooltip>
+          
+          <v-tooltip top>
+            <template v-slot:activator="{ on, attrs }">  
+              <v-btn small flat color="grey" class="mx-3" 
+                @click="sortBy('person')" 
+                v-bind="attrs"
+                v-on="on">
+                <v-icon left small>mdi-folder</v-icon><span class="caption text-lowercase">by person name</span>
+              </v-btn>
+            </template>
+            <span>Sort by Person</span>
+          </v-tooltip>
+        </v-row>
+
         <v-card flat v-for="(project, index) in projects" :key="index">
           <v-row :class="`pa-3 project ${project.status}`">
-            <v-flex xs12 md6>
+            <v-col xs12 md6>
               <div class="caption grey--text">Project Title</div>  
               <div>{{ project.title }}</div>
-            </v-flex>
-            <v-flex xs6 sm4 md2>
+            </v-col>
+            <v-col xs6 sm4 md2>
               <div class="caption grey--text">Person</div>  
               <div>{{ project.person }}</div>
-            </v-flex>
-            <v-flex xs6 sm4 md2>
+            </v-col>
+            <v-col xs6 sm4 md2>
               <div class="caption grey--text">Due Date</div>  
               <div>{{ project.due }}</div>
-            </v-flex>
-            <v-flex xs6 sm4 md2>
-              <div class="align-lg-end">
+            </v-col>
+            <v-col xs6 sm4 md2>
+              <div class="text-right">
                 <v-chip small :class="`${project.status} white--text caption my-2`">{{ project.status }}</v-chip>
               </div>
-            </v-flex>
+            </v-col>
           </v-row>
           <v-divider></v-divider>
         </v-card>
       </v-container>
+
   </div>  
 </template>
 
@@ -44,6 +73,11 @@ export default {
     };
   },
   components: {
+  },
+  methods: {
+    sortBy (prop) {
+      this.projects.sort((a,b) => a[prop] < b[prop] ? -1 : 1 )
+    }
   }
 }
 </script>
