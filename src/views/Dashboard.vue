@@ -1,9 +1,8 @@
 <template>
-  <div class="home">
-    <h1>Home Page</h1>
-    <v-btn class="hidden-md-and-down">click me</v-btn>
-    <v-btn class="d-md-none">click me2</v-btn>
-  </div>
+  <div class="dashboard">
+      <h1 class="subheading grey--text">Dashboard</h1>
+      <v-container class="my-5">Content</v-container>
+  </div>  
 </template>
 
 <script>
