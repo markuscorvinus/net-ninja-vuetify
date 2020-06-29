@@ -43,9 +43,14 @@
                         <v-avatar size="100" ><img src="/avatar-1.png" alt="The net Ninja"></v-avatar>
                     </v-row>
                     <p class="white--text text-center text-subtitle-1 mt-1">THE NET NINJA</p>                    
+                    <v-row justify="center" align="center" class="mt-4">
+                        <Popup />
+                    </v-row>
                 </v-col>
             </v-row>
+            
             <v-divider></v-divider>
+
             <v-list>
                 <v-list-item v-for="(link,index) in links" :key="index" :to="link.route">
                     <v-list-item-action>
@@ -61,6 +66,8 @@
 </template>
 
 <script>
+import Popup from './Popup'
+
 export default {
     data(){
         return{
@@ -71,6 +78,9 @@ export default {
                 {icon: 'account-group', text: 'Team', route: '/team'}
             ]
         }
+    },
+    components:{
+        Popup
     }
 }
 </script>
