@@ -1,21 +1,42 @@
 <template>
    <nav>
-       <v-app-bar app dark>
-           <v-app-bar-nav-icon class="grey--text" @click="drawer = !drawer">
+        <v-app-bar app dark>
+            <v-app-bar-nav-icon class="grey--text" @click="drawer = !drawer"></v-app-bar-nav-icon>
 
-           </v-app-bar-nav-icon>
-           <v-toolbar-title class="text-uppercase grey--text">
-               <span class="font-weight-light">Todo</span>
-               <span>Ninja</span>
-           </v-toolbar-title>
-           <v-spacer></v-spacer>
-           <v-btn text color="grey">
-               <span>Sign Out</span>
-               <v-icon right>mdi-exit-to-app</v-icon>
-           </v-btn>
-       </v-app-bar>
+            
 
-       <v-navigation-drawer app v-model="drawer" color="secondary" > 
+            <v-toolbar-title class="text-uppercase grey--text">
+                <span class="font-weight-light">Todo</span>
+                <span>Ninja</span>
+            </v-toolbar-title>
+            
+            <v-spacer></v-spacer>
+
+            <!-- Dropdown menu -->
+            <v-menu bottom offset-y rounded="b-xl"> 
+                <template v-slot:activator="{ on, attrs }">
+                    <v-btn color="primary" dark flat
+                    v-bind="attrs"
+                    v-on="on"
+                    >
+                    <v-icon left>mdi-chevron-down</v-icon>
+                    <span>Menu</span>
+                    </v-btn>
+                </template>    
+                <v-list>
+                    <v-list-item v-for="(link,index) in links" :key="index" :to="link.route">
+                        <v-list-item-title>{{ link.text }}</v-list-item-title>
+                    </v-list-item>    
+                </v-list>
+            </v-menu>
+            <v-btn text color="grey">
+                <span>Sign Out</span>
+                <v-icon right>mdi-exit-to-app</v-icon>
+            </v-btn>
+        </v-app-bar>
+
+        
+        <v-navigation-drawer app v-model="drawer" color="secondary" > 
             <v-row>
                 <v-col class="mt-5">
                     <v-row  justify="center" align="center">
@@ -35,7 +56,7 @@
                     </v-list-item-content>
                 </v-list-item>
             </v-list>
-       </v-navigation-drawer>
+        </v-navigation-drawer>
    </nav>
 </template>
 
