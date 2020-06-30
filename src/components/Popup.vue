@@ -1,5 +1,5 @@
 <template>
-    <v-dialog max-width="600px">
+    <v-dialog max-width="600px" v-model="dialog">
         <template v-slot:activator="{ on, attrs }">
             <v-btn color="grey darken-4 grey--text text--lighten-1" 
             v-bind="attrs" v-on="on">
@@ -43,7 +43,10 @@
                   </template>
                   <v-date-picker v-model="due" no-title scrollable  @input="menu = false"></v-date-picker>
                 </v-menu>
-                <v-btn text class="teal lighten-2 mx-0 mt-3" @click.stop="addProject">Add Project</v-btn>
+                <v-btn text class="teal lighten-2 mx-0 mt-3" 
+                  :loading="loading"
+                  :disabled="loading"
+                @click.stop="addProject">Add Project</v-btn>
             </v-form>               
           </v-card-text>          
       </v-card>
@@ -61,10 +64,12 @@ export default {
             title: '',
             content: '',
             menu: false,
+            dialog: false,
             due: new Date().toISOString().substr(0, 10),
             inputRules: [
               v => v.length >= 3 || 'Minimum length is 3 characters' 
-            ]
+            ],
+            loading: false
         }
     },
     computed: {
@@ -75,6 +80,7 @@ export default {
     methods:{
         addProject(){
           if(this.$refs.form.validate()){
+            this.loading = true;
             const project = {
               title: this.title,
               content: this.content,
@@ -85,7 +91,8 @@ export default {
 
             db.collection('projects').add(project)
             .then(() => {
-              console.log(`success`);
+              this.loading = false;
+              this.dialog = false;
             });
           }
         },        
