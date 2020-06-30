@@ -15,7 +15,7 @@
             <!-- Dropdown menu -->
             <v-menu bottom offset-y rounded="b-xl"> 
                 <template v-slot:activator="{ on, attrs }">
-                    <v-btn color="primary" dark flat
+                    <v-btn color="primary" dark text
                     v-bind="attrs"
                     v-on="on"
                     >

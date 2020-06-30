@@ -7,7 +7,7 @@
         <v-row class="mb-3">
           <v-tooltip top>
             <template v-slot:activator="{ on, attrs }">  
-              <v-btn small flat color="grey" class="mx-3" 
+              <v-btn small text color="grey" class="mx-3" 
                 @click="sortBy('title')" 
                 v-bind="attrs"
                 v-on="on">
@@ -19,7 +19,7 @@
           
           <v-tooltip top>
             <template v-slot:activator="{ on, attrs }">  
-              <v-btn small flat color="grey" class="mx-3" 
+              <v-btn small text color="grey" class="mx-3" 
                 @click="sortBy('person')" 
                 v-bind="attrs"
                 v-on="on">

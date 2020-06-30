@@ -10,31 +10,40 @@
       <v-card>
           <v-card-title primary-title class="grey">Add New project</v-card-title>
           <v-card-text>
-            <v-form class="py-3">
-                <v-text-field prepend-icon="mdi-pencil" label="Title" v-model="title" color="green" />
-                <v-textarea prepend-icon="mdi-folder" label="Project Information" v-model="content" color="green" />
+            <v-form class="py-3" ref="form">
+                <v-text-field prepend-icon="mdi-pencil" 
+                  label="Title" 
+                  v-model="title" 
+                  color="green" 
+                  :rules="inputRules"
+                />
+                <v-textarea prepend-icon="mdi-folder" 
+                  label="Project Information" 
+                  v-model="content" 
+                  color="green" 
+                  :rules="inputRules"
+                />
                 <v-menu
+                  ref="menu"
+                  v-model="menu"
                   :close-on-content-click="false"
                   transition="scale-transition"
                   offset-y
-                  max-width="290px"
                   min-width="290px"
                 >
                   <template v-slot:activator="{ on, attrs }">
                     <v-text-field
-                      :value="date"
-                      label="Due Date"
-                      hint="MM/DD/YYYY format"
-                      persistent-hint
+                      :value="computedDateFormatted"
+                      label="Picker in menu"
                       prepend-icon="mdi-calendar"
-                      @blur="date = parseDate(dateFormatted)"
+                      readonly
                       v-bind="attrs"
                       v-on="on"
                     ></v-text-field>
                   </template>
-                  <v-date-picker v-model="date" no-title @input="menu2 = false"></v-date-picker>
+                  <v-date-picker v-model="due" no-title scrollable  @input="menu = false"></v-date-picker>
                 </v-menu>
-                <v-btn flat class="teal lighten-2 mx-0 mt-3" @click.stop="addProject">Add Project</v-btn>
+                <v-btn text class="teal lighten-2 mx-0 mt-3" @click.stop="addProject">Add Project</v-btn>
             </v-form>               
           </v-card-text>          
       </v-card>
@@ -42,23 +51,44 @@
 </template>
 
 <script>
+import { format } from 'date-fns'
+import db from '@/fb.js'
+
+
 export default {
     data(){
         return{
             title: '',
             content: '',
-            date: ''
+            menu: false,
+            due: new Date().toISOString().substr(0, 10),
+            inputRules: [
+              v => v.length >= 3 || 'Minimum length is 3 characters' 
+            ]
         }
     },
     computed: {
         computedDateFormatted(){
-            return this.date;
+            return this.due ? format(new Date(this.due), 'do MMM yyyy') : ''
         }
     },
     methods:{
         addProject(){
+          if(this.$refs.form.validate()){
+            const project = {
+              title: this.title,
+              content: this.content,
+              due: this.computedDateFormatted,
+              person: 'The Net Ninja',
+              status: 'ongoing'
+            }
 
-        }
+            db.collection('projects').add(project)
+            .then(() => {
+              console.log(`success`);
+            });
+          }
+        },        
     }
 }
 </script>
