@@ -1,5 +1,11 @@
 <template>
    <nav>
+        <v-snackbar v-model="snackbar" :timeout="4000" top color="green"> 
+            <span>Awesome! You added a new project.</span>
+            <template v-slot:action="{ attrs }">
+                <v-btn text v-bind="attrs" @click="snackbar = false">Close</v-btn>
+            </template>
+        </v-snackbar>
         <v-app-bar app dark>
             <v-app-bar-nav-icon class="grey--text" @click="drawer = !drawer"></v-app-bar-nav-icon>
 
@@ -44,7 +50,7 @@
                     </v-row>
                     <p class="white--text text-center text-subtitle-1 mt-1">THE NET NINJA</p>                    
                     <v-row justify="center" align="center" class="mt-4">
-                        <Popup />
+                        <Popup @projectAdded="snackbar = true" />
                     </v-row>
                 </v-col>
             </v-row>
@@ -76,7 +82,8 @@ export default {
                 {icon: 'view-dashboard', text: 'Dashboard', route: '/'},
                 {icon: 'folder', text: 'My Projects', route: '/projects'},
                 {icon: 'account-group', text: 'Team', route: '/team'}
-            ]
+            ],
+            snackbar: false
         }
     },
     components:{
